@@ -29,8 +29,7 @@ class MyStreamListener(StreamListener):
                 PartitionKey=data.get('id_str') if data.get('id_str') else str(data.get('id')) 
             )
         except Exception as e:
-            print("Error while trying to put a record")
-            print(e)
+            print(f"Error while trying to put a record - {e}")
 
     def on_error(self, status_code):
         print(f"[*] Error : {status_code}")
