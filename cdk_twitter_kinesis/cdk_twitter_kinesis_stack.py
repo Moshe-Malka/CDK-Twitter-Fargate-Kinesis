@@ -32,12 +32,25 @@ class CdkTwitterKinesisStack(core.Stack):
             'task_role',
             assumed_by=iam.ServicePrincipal('ecs-tasks.amazonaws.com')
         )
-
+        # Policy to allow task to put records into Kinessis
         task_role.add_to_policy(
             iam.PolicyStatement(
                 effect=iam.Effect.ALLOW,
                 actions=['kinesis:PutRecord', 'kinesis:PutRecords', 'kinesis:DescribeStream'],
                 resources=[kds.stream_arn]
+            )
+        )
+        # Policy to get secret from SecretsManager 
+        task_role.add_to_policy(
+            iam.PolicyStatement(
+                effect=iam.Effect.ALLOW,
+                actions=[
+                    'secretsmanager:GetResourcePolicy',
+                    'secretsmanager:GetSecretValue',
+                    'secretsmanager:DescribeSecret',
+                    'secretsmanager:ListSecretVersionIds'
+                ],
+                resources=['*']
             )
         )
 
