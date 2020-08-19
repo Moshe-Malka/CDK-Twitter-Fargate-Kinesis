@@ -2,6 +2,7 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler, Stream
 import os, json, sys
 import boto3
+from botocore.exceptions import ClientError
 
 # aws secretsmanager create-secret --name TwitterAPISecrets --secret-string file://twitter_credentials.json
 KINESIS_STREAM_NAME = os.environ.get('KINESIS_STREAM_NAME', 'twitter-stream')
